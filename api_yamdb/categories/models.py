@@ -22,9 +22,11 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+
 class Genre(models.Model):
     name = models.CharField(
         verbose_name='Название',
+        max_length=200,
     )
     slug = models.SlugField(
         verbose_name='Идентификатор',
@@ -39,15 +41,17 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+
 class Title(models.Model):
     name = models.CharField(
-        verbose_name='Название'
+        verbose_name='Название',
+        max_length=200
     )
     year = models.IntegerField(
         verbose_name='Год выпуска',
         validators=[valid_year]
     )
-    description = models.CharField(
+    description = models.TextField(
         verbose_name='Описание',
         null=True,
         blank=True
