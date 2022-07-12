@@ -1,5 +1,3 @@
-from re import T
-from tabnanny import verbose
 from django.db import models
 
 from .validators import valid_year
