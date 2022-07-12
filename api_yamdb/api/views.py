@@ -5,8 +5,8 @@ from rest_framework import filters, viewsets
 from categories.models import Category, Genre, Title
 from .serializers import (CategorySerializer, GenreSerializer,
                           TitleSerializer, UserSerializer)
-from users.models import User                          
-                          
+from users.models import User         
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
