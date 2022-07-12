@@ -13,12 +13,12 @@ class Category(models.Model):
         max_length=50,
         unique=True
     )
-    
+
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         ordering = ['name']
-    
+
     def __str__(self):
         return self.name
 
@@ -26,18 +26,18 @@ class Category(models.Model):
 class Genre(models.Model):
     name = models.CharField(
         verbose_name='Название',
-        max_length=200,
+        max_length=256
     )
     slug = models.SlugField(
         verbose_name='Идентификатор',
         unique=True
     )
-    
+
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
         ordering = ['name']
-    
+
     def __str__(self):
         return self.name
 
@@ -45,7 +45,7 @@ class Genre(models.Model):
 class Title(models.Model):
     name = models.CharField(
         verbose_name='Название',
-        max_length=200
+        max_length=256
     )
     year = models.IntegerField(
         verbose_name='Год выпуска',
@@ -54,7 +54,8 @@ class Title(models.Model):
     description = models.TextField(
         verbose_name='Описание',
         null=True,
-        blank=True
+        blank=True,
+        max_length=256
     )
     genre = models.ManyToManyField(
         Genre,
@@ -70,11 +71,11 @@ class Title(models.Model):
         verbose_name='Рейтинг',
         null=True
     )
-    
+
     class Meta:
         verbose_name = 'Произведение'
         verbose_name_plural = 'Произведения'
         ordering = ['name']
-    
+
     def __str__(self):
         return self.name
