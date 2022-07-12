@@ -5,29 +5,42 @@ from rest_framework import viewsets
 from categories.models import Category, Genre, Title
 from .serializers import (CategorySerializer, GenreSerializer,
                           TitleSerializer, UserSerializer)
-from users.models import User                          
+from users.models import User
+
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, \
+    IsAuthenticated
+from .permissions import *
                           
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
-    serializers_class = CategorySerializer
-    # permission_classes =
+    serializer_class = CategorySerializer
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+        IsAdminOrReadOnly
+    )
     filter_backend = (SearchFilter, )
     search_fields = ('name',)
 
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
-    serializers_class = GenreSerializer
-    # permission_classes =
+    serializer_class = GenreSerializer
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+        IsAdminOrReadOnly
+    )
     filter_backend = (SearchFilter, )
     search_fields = ('name',)
 
 
 class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
-    serializers_class = TitleSerializer
-    # permission_classes =
+    serializer_class = TitleSerializer
+    permission_classes = (
+        IsAuthenticatedOrReadOnly,
+        IsAdminOrReadOnly
+    )
     filter_backend = (DjangoFilterBackend, )
     filterset_fields = ('category', 'genre', 'name', 'year')
     
@@ -35,7 +48,10 @@ class TitleViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    # permission_classes = (IsAdminUser, )
+    permission_classes = (
+        IsAuthenticated,
+        IsAdmin
+    )
     filter_backends = (DjangoFilterBackend, SearchFilter)
     search_fields = ('username', )
     lookup_field = 'username'
