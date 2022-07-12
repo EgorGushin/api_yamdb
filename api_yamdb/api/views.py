@@ -6,4 +6,5 @@ class CategoryViewSet():
     queryset = Category.objects.all()
     serializers_class = CategorySerializer
     permission_classes = 
-    filter_backend = 
+    filter_backend = (filters.SearchFilter)
+    search_fields = ('name',)
