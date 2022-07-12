@@ -51,7 +51,7 @@ class Title(models.Model):
         verbose_name='Год выпуска',
         validators=[valid_year]
     )
-    description = models.CharField(
+    description = models.TextField(
         verbose_name='Описание',
         null=True,
         blank=True,
