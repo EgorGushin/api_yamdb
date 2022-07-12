@@ -25,6 +25,7 @@ class Category(models.Model):
 class Genre(models.Model):
     name = models.CharField(
         verbose_name='Название',
+        max_length=256
     )
     slug = models.SlugField(
         verbose_name='Идентификатор',
@@ -41,7 +42,8 @@ class Genre(models.Model):
 
 class Title(models.Model):
     name = models.CharField(
-        verbose_name='Название'
+        verbose_name='Название',
+        max_length=256
     )
     year = models.IntegerField(
         verbose_name='Год выпуска',
@@ -50,7 +52,8 @@ class Title(models.Model):
     description = models.CharField(
         verbose_name='Описание',
         null=True,
-        blank=True
+        blank=True,
+        max_length=256
     )
     genre = models.ManyToManyField(
         Genre,

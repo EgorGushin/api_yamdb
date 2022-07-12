@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
-from rest_framework import filters
+from rest_framework import filters, viewsets
 
 from categories.models import Category, Genre, Title
 from .serializers import (CategorySerializer, GenreSerializer,
@@ -8,34 +8,34 @@ from .serializers import (CategorySerializer, GenreSerializer,
 from users.models import User                          
                           
 
-class CategoryViewSet():
+class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
-    serializers_class = CategorySerializer
-    permission_classes = 
+    serializer_class = CategorySerializer
+    # permission_classes = 
     filter_backend = (SearchFilter)
     search_fields = ('name',)
 
 
-class GenreViewSet():
+class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
-    serializers_class = GenreSerializer
-    permission_classes = 
+    serializer_class = GenreSerializer
+    # permission_classes = 
     filter_backend = (SearchFilter)
     search_fields = ('name',)
 
 
-class TitleViewSet():
+class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all()
-    serializers_class = TitleSerializer
-    permission_classes = 
+    serializer_class = TitleSerializer
+    # permission_classes = 
     filter_backend = (DjangoFilterBackend)
     filterset_fields = ('category', 'genre', 'name', 'year')
     
     
- class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (IsAdminUser, )
+    # permission_classes = (IsAdminUser, )
     filter_backends = (DjangoFilterBackend, SearchFilter)
     search_fields = ('username', )
     lookup_field = 'username'
