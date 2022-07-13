@@ -37,11 +37,7 @@ pytz==2022.1
 requests==2.26.0
 sqlparse==0.4.2
 toml==0.10.2
-<<<<<<< HEAD
 typing==3.7.4.3
 typing_extensions==4.3.0
 urllib3==1.26.10
 zipp==3.8.0
-=======
-urllib3==1.26.10
->>>>>>> 4cb44ec27e1c310756dca3cd39b1123067dacde6
