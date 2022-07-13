@@ -57,7 +57,7 @@ class CategoryViewSet(ListCreateDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (
-        IsAuthenticatedOrReadOnly,
+        IsModerAdminAuthor,
         IsAdminOrReadOnly
     )
     filter_backend = (SearchFilter, )
