@@ -7,13 +7,14 @@ from categories.models import Category, Genre, Title
 from .serializers import (CategorySerializer, GenreSerializer,
                           TitleSerializer, UserSerializer)
 from users.models import User
+from .mixins import ListCreateDestroyViewSet
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, \
     IsAuthenticated
 from .permissions import *
                           
 
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(ListCreateDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (
@@ -24,7 +25,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     search_fields = ('name',)
 
 
-class GenreViewSet(viewsets.ModelViewSet):
+class GenreViewSet(ListCreateDestroyViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (
@@ -43,7 +44,7 @@ class TitleViewSet(viewsets.ModelViewSet):
         IsAdminOrReadOnly
     )
     filter_backend = (DjangoFilterBackend, )
-    filterset_fields = ('category', 'genre', 'name', 'year')
+    filterset_fields = ('name', 'year', 'genre', 'category')
 
 
 class UserViewSet(viewsets.ModelViewSet):
