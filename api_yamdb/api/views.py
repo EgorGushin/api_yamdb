@@ -62,6 +62,7 @@ class CategoryViewSet(ListCreateDestroyViewSet):
     )
     filter_backend = (SearchFilter, )
     search_fields = ('name',)
+    lookup_field = "slug"
 
 
 class GenreViewSet(ListCreateDestroyViewSet):
@@ -73,6 +74,7 @@ class GenreViewSet(ListCreateDestroyViewSet):
     )
     filter_backend = (SearchFilter, )
     search_fields = ('name',)
+    lookup_field = "slug"
 
 
 class TitleViewSet(viewsets.ModelViewSet):
