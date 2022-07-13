@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from users.validators import validate_username
+from .validators import validate_username
 
 
 class User(AbstractUser):
@@ -15,7 +15,7 @@ class User(AbstractUser):
         help_text='Обязательное поле, не более 150 букв/цифр/@/./+/-/_',
         max_length=150,
         unique=True,
-        # validators=(validate_username, )
+        validators=(validate_username, )
     )
     email = models.EmailField(
         verbose_name='Электронная почта',
@@ -43,8 +43,6 @@ class User(AbstractUser):
         choices=roles,
         default='user'
     )
-    # USERNAME_FIELD = 'username'
-    # REQUIRED_FIELDS = ('email', )
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -53,7 +51,7 @@ class User(AbstractUser):
 
     @property
     def is_admin(self):
-        return self.role == 'admin' or self.is_staff
+        return self.role == 'admin' or self.is_superuser
 
     @property
     def is_moderator(self):
