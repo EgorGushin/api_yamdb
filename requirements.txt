@@ -3,7 +3,6 @@ attrs==21.4.0
 certifi==2022.6.15
 charset-normalizer==2.0.12
 Django==2.2.16
-django-filter==22.1
 djangorestframework==3.12.4
 djangorestframework-simplejwt==5.2.0
 flake8==4.0.1
@@ -17,17 +16,7 @@ py==1.11.0
 pycodestyle==2.8.0
 pyflakes==2.4.0
 backports.zoneinfo==0.2.1
-certifi==2022.6.15
-charset-normalizer==2.0.12
-Django==2.2.16
 django-filter==2.4.0
-djangorestframework==3.12.4
-djangorestframework-simplejwt==5.2.0
-idna==3.3
-iniconfig==1.1.1
-packaging==21.3
-pluggy==0.13.1
-py==1.11.0
 PyJWT==2.1.0
 pyparsing==3.0.9
 pytest==6.2.4
@@ -37,11 +26,7 @@ pytz==2022.1
 requests==2.26.0
 sqlparse==0.4.2
 toml==0.10.2
-<<<<<<< HEAD
 typing==3.7.4.3
 typing_extensions==4.3.0
 urllib3==1.26.10
 zipp==3.8.0
-=======
-urllib3==1.26.10
->>>>>>> 4cb44ec27e1c310756dca3cd39b1123067dacde6
