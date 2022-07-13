@@ -12,6 +12,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 
+from rest_framework import filters, viewsets, pagination
+
 from categories.models import Category, Genre, Title
 from reviews.models import Comment, Review
 from .serializers import (CategorySerializer, CommentSerializer,
@@ -120,7 +122,7 @@ class GetTokenApiView(APIView):
         errors = {'error': 'Неверный код подтверждения'}
         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
