@@ -17,7 +17,8 @@ from .permissions import *
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, ReviewSerializer,
                           TitleSerializer, UserSerializer,
-                          GetConfirmationCodeSerializer, GetTokenSerializer
+                          GetConfirmationCodeSerializer, GetTokenSerializer,
+                          ReadOnlyTitleSerializer
                           )
 
 
@@ -143,3 +144,7 @@ class TitleViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
     filter_backend = (DjangoFilterBackend, )
     filterset_fields = ('name', 'year', 'genre', 'category')
+    def get_serializer_class(self):
+        if self.action in ("retrieve", "list"):
+            return ReadOnlyTitleSerializer
+        return TitleSerializer
