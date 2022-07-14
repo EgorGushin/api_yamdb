@@ -1,16 +1,15 @@
 from django.urls import include, path
 from rest_framework import routers
-from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .views import (
     CategoryViewSet,
     CommentViewSet,
     GenreViewSet,
     ReviewViewSet,
-    sign_up,
-    get_token,
     TitleViewSet,
     UserViewSet,
+    sign_up,
+    get_token,
 )
 
 router = routers.DefaultRouter()
