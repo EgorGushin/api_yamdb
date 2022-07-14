@@ -1,9 +1,12 @@
-from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
-from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 
-from reviews.models import Category, Comment, Genre, Review, Title, User
+from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+from rest_framework.validators import UniqueValidator
+
+from reviews.models import (Category, Comment,
+                            Genre, Review,
+                            Title, User)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -69,7 +72,6 @@ class ReviewSerializer(serializers.ModelSerializer):
             if Review.objects.filter(title=title, author=author).exists():
                 raise ValidationError('Вы уже оставляли отзыв.')
         return data
-    
 
     class Meta:
         model = Review
