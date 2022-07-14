@@ -20,6 +20,7 @@ from .serializers import (CategorySerializer, CommentSerializer,
                           GetConfirmationCodeSerializer, GetTokenSerializer,
                           ReadOnlyTitleSerializer
                           )
+from .filters import TitlesFilter
 
 
 @api_view(['POST'])
@@ -143,7 +144,8 @@ class TitleViewSet(viewsets.ModelViewSet):
     serializer_class = TitleSerializer
     permission_classes = (IsAdminOrReadOnly,)
     filter_backend = (DjangoFilterBackend, )
-    filterset_fields = ('name', 'year', 'genre', 'category')
+    # filterset_fields = ('name', 'year', 'genre', 'category')
+    filterset_class = TitlesFilter
     def get_serializer_class(self):
         if self.action in ("retrieve", "list"):
             return ReadOnlyTitleSerializer
