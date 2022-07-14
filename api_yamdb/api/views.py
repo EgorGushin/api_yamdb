@@ -8,7 +8,7 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
@@ -95,7 +95,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = (IsModerOrAdminOrAuthor,)
+    permission_classes = (IsModerOrAdminOrAuthor, IsAuthenticatedOrReadOnly)
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
@@ -109,7 +109,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    permission_classes = (IsModerOrAdminOrAuthor,)
+    permission_classes = (IsModerOrAdminOrAuthor, IsAuthenticatedOrReadOnly)
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
