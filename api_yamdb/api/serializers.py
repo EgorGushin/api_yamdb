@@ -1,45 +1,34 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework.relations import SlugRelatedField
 from rest_framework.validators import UniqueValidator
 
-from categories.models import Category, Genre, Title
-from reviews.models import Comment, Review
-from users.models import User
-from users.validators import validate_username
-
-
-# User = get_user_model()
+from reviews.models import Category, Comment, Genre, Review, Title, User
 
 
 class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = (
+            'username', 'email', 'first_name', 'last_name', 'bio', 'role'
+        )
+        model = User
+
+
+class GetConfirmationCodeSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
         validators=(UniqueValidator(queryset=User.objects.all()), ),
         required=True
     )
     email = serializers.EmailField(
         validators=(UniqueValidator(queryset=User.objects.all()), ),
+        required=True
     )
 
-    class Meta:
-        fields = '__all__'
-        model = User
-
-
-class GetConfirmationCodeSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(
-        validators=(UniqueValidator(queryset=User.objects.all()), )
-    )
-    email = serializers.EmailField(
-        validators=(UniqueValidator(queryset=User.objects.all()), )
-    )
-
-    def validate_username(self, value):
-        if value.lower() == 'me':
+    def validate(self, data):
+        if data['username'].lower() == 'me':
             raise serializers.ValidationError(
                 'Использовать никнейм "me" запрещено.'
             )
-        return value
+        return data
 
     class Meta:
         model = User
@@ -47,22 +36,31 @@ class GetConfirmationCodeSerializer(serializers.ModelSerializer):
 
 
 class GetTokenSerializer(serializers.Serializer):
-    username = serializers.CharField()
-    confirmation_code = serializers.CharField()
+    username = serializers.CharField(required=True)
+    confirmation_code = serializers.CharField(required=True)
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True
+    )
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('id', 'text', 'author', 'pub_date',)
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    author = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True,
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Review
-        fields = '__all__'
+        fields = ('id', 'text', 'author', 'score', 'pub_date',)
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -90,4 +88,6 @@ class TitleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Title
-        fields = '__all__'
+        fields = (
+            'id', 'name', 'year', 'rating', 'description', 'genre', 'category'
+        )

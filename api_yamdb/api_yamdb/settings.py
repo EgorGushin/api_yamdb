@@ -20,10 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'users.apps.UsersConfig',
-    'categories.apps.CategoriesConfig',
-    'reviews.apps.ReviewsConfig',
     'api.apps.ApiConfig',
+    'reviews.apps.ReviewsConfig',
 
     'rest_framework',
     'rest_framework_simplejwt',
@@ -102,7 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'reviews.User'
 
 LANGUAGE_CODE = 'en-us'
 
