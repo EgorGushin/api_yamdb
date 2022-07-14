@@ -20,11 +20,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class GetConfirmationCodeSerializer(serializers.ModelSerializer):
     username = serializers.CharField(
-        validators=(UniqueValidator(queryset=User.objects.all()), ),
+        validators=(UniqueValidator(queryset=User.objects.all()),),
         required=True
     )
     email = serializers.EmailField(
-        validators=(UniqueValidator(queryset=User.objects.all()), ),
+        validators=(UniqueValidator(queryset=User.objects.all()),),
         required=True
     )
 
@@ -53,7 +53,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'text', 'author', 'pub_date',)
+        fields = ('id', 'text', 'author', 'pub_date')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -75,7 +75,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'text', 'author', 'score', 'pub_date',)
+        fields = ('id', 'text', 'author', 'score', 'pub_date')
 
 
 class CategorySerializer(serializers.ModelSerializer):
