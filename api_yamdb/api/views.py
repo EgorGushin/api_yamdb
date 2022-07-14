@@ -129,7 +129,7 @@ class CategoryViewSet(ListCreateDestroyViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
-    filter_backend = (SearchFilter, )
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     search_fields = ('name',)
     lookup_field = 'slug'
     pagination_class = PageNumberPagination
@@ -139,7 +139,7 @@ class GenreViewSet(ListCreateDestroyViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrReadOnly,)
-    filter_backend = (SearchFilter,)
+    filter_backends = (DjangoFilterBackend, SearchFilter)
     search_fields = ('name',)
     lookup_field = 'slug'
 
@@ -150,7 +150,7 @@ class TitleViewSet(viewsets.ModelViewSet):
     ).order_by('name')
     serializer_class = TitleSerializer
     permission_classes = (IsAdminOrReadOnly,)
-    filter_backend = (DjangoFilterBackend, )
+    filter_backend = (DjangoFilterBackend,)
     filterset_class = TitlesFilter
 
     def get_serializer_class(self):

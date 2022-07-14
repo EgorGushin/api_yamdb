@@ -9,14 +9,14 @@ class User(AbstractUser):
     roles = (
         ('user', 'Аутентифицированный пользователь'),
         ('moderator', 'Модератор'),
-        ('admin', 'Администратор'),
+        ('admin', 'Администратор')
     )
     username = models.CharField(
         verbose_name='Имя пользователя',
         help_text='Обязательное поле, не более 150 букв/цифр/@/./+/-/_',
         max_length=150,
         unique=True,
-        validators=(validate_username, )
+        validators=(validate_username,)
     )
     email = models.EmailField(
         verbose_name='Электронная почта',
@@ -52,7 +52,7 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        ordering = ('username', )
+        ordering = ('username',)
 
     @property
     def is_admin(self):
@@ -69,13 +69,12 @@ class User(AbstractUser):
 class Category(models.Model):
     name = models.CharField(
         verbose_name='Название категории',
-        help_text='Название категории',
+        help_text='Укажите название категории',
         max_length=256
-
     )
     slug = models.SlugField(
         verbose_name='Идентификатор категории',
-        help_text='Идентификатор категории',
+        help_text='Укажите идентификатор категории',
         max_length=50,
         unique=True
     )
@@ -83,7 +82,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        ordering = ('name', )
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -92,19 +91,19 @@ class Category(models.Model):
 class Genre(models.Model):
     name = models.CharField(
         verbose_name='Название жанра',
-        help_text='Название жанра',
+        help_text='Укажите название жанра',
         max_length=256
     )
     slug = models.SlugField(
         verbose_name='Идентификатор жанра',
-        help_text='Идентификатор жанра',
+        help_text='Укажите идентификатор жанра',
         unique=True
     )
 
     class Meta:
         verbose_name = 'Жанр'
         verbose_name_plural = 'Жанры'
-        ordering = ('name', )
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
@@ -113,29 +112,29 @@ class Genre(models.Model):
 class Title(models.Model):
     name = models.CharField(
         verbose_name='Название произведения',
-        help_text='Название произведения',
+        help_text='Укажите название произведения',
         max_length=256
     )
     year = models.IntegerField(
         verbose_name='Год выпуска произведения',
-        help_text='Год выпуска произведения',
+        help_text='Укажите год выпуска произведения',
         validators=(valid_year, )
     )
     description = models.TextField(
         verbose_name='Описание произведения',
-        help_text='Описание произведения',
+        help_text='Введите описание произведения',
         null=True,
         blank=True,
     )
     genre = models.ManyToManyField(
         Genre,
         verbose_name='Жанр произведения',
-        help_text='Жанр произведения',
+        help_text='Укажите жанр произведения',
     )
     category = models.ForeignKey(
         Category,
         verbose_name='Категория произведения',
-        help_text='Категория произведения',
+        help_text='Укажите категорию произведения',
         on_delete=models.SET_NULL,
         null=True
     )
@@ -148,18 +147,18 @@ class Title(models.Model):
     class Meta:
         verbose_name = 'Произведение'
         verbose_name_plural = 'Произведения'
-        ordering = ('name', )
+        ordering = ('name',)
 
     def __str__(self):
         return self.name
 
 
-class GenresTitles(models.Model):
-    genres = models.ForeignKey(Genre, on_delete=models.CASCADE)
-    titles = models.ForeignKey(Title, on_delete=models.CASCADE)
+class GenreTitle(models.Model):
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    title = models.ForeignKey(Title, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.titles}, жанр - {self.genres}'
+        return f'{self.title}, жанр - {self.genre}'
 
 
 class Review(models.Model):
@@ -172,7 +171,7 @@ class Review(models.Model):
     )
     text = models.TextField(
         verbose_name='Текст обзора',
-        help_text='Текст обзора',
+        help_text='Введите текст обзора',
     )
     author = models.ForeignKey(
         User,
@@ -183,7 +182,7 @@ class Review(models.Model):
     )
     score = models.PositiveSmallIntegerField(
         verbose_name='Оценка произведения',
-        help_text='Оценка произведения',
+        help_text='Укажите оценку',
         validators=[
             MinValueValidator(1, message='Оценка не может быть ниже 1'),
             MaxValueValidator(10, message='Оценка не может быть выше 10'),
@@ -215,13 +214,13 @@ class Comment(models.Model):
     review = models.ForeignKey(
         Review,
         verbose_name='Комментарий',
-        help_text='Комментарий',
+        help_text='Комментарий к обзору',
         on_delete=models.CASCADE,
         related_name='comments',
     )
     text = models.TextField(
         verbose_name='Текст комментария',
-        help_text='Текст комментария',
+        help_text='Введите текст комментария',
     )
     author = models.ForeignKey(
         User,
