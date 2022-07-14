@@ -14,11 +14,14 @@ from rest_framework.permissions import (AllowAny, IsAuthenticated,
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
-from reviews.models import Category, Comment, Genre, Review, Title, User
+from reviews.models import (Category, Comment,
+                            Genre, Review,
+                            Title, User)
 
 from .filters import TitlesFilter
 from .mixins import ListCreateDestroyViewSet
-from .permissions import *
+from .permissions import (IsAdmin, IsAdminOrReadOnly,
+                          IsModerOrAdminOrAuthor)
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, GetConfirmationCodeSerializer,
                           GetTokenSerializer, ReadOnlyTitleSerializer,

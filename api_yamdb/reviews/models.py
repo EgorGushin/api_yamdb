@@ -2,10 +2,11 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from .validators import *
+from .validators import validate_username, valid_year
 
 
 class User(AbstractUser):
+    """Пользователи."""
     roles = (
         ('user', 'Аутентифицированный пользователь'),
         ('moderator', 'Модератор'),
@@ -63,6 +64,7 @@ class User(AbstractUser):
 
 
 class Category(models.Model):
+    """Категории (типы) произведений («Фильмы», «Книги», «Музыка»)."""
     name = models.CharField(
         verbose_name='Название категории',
         max_length=256
@@ -83,6 +85,7 @@ class Category(models.Model):
 
 
 class Genre(models.Model):
+    """Жанры произведений."""
     name = models.CharField(
         verbose_name='Название жанра',
         max_length=256
@@ -102,6 +105,7 @@ class Genre(models.Model):
 
 
 class Title(models.Model):
+    """Произведения, к которым пишут отзывы."""
     name = models.CharField(
         verbose_name='Название произведения',
         max_length=256
@@ -140,6 +144,7 @@ class Title(models.Model):
 
 
 class GenresTitles(models.Model):
+    """Названия жанров."""
     genres = models.ForeignKey(Genre, on_delete=models.CASCADE)
     titles = models.ForeignKey(Title, on_delete=models.CASCADE)
 
@@ -148,6 +153,7 @@ class GenresTitles(models.Model):
 
 
 class Review(models.Model):
+    """Отзывы на произведения."""
     title = models.ForeignKey(
         Title,
         verbose_name='Произведение',
@@ -192,6 +198,7 @@ class Review(models.Model):
 
 
 class Comment(models.Model):
+    """Комментарии к отзывам на произведения."""
     review = models.ForeignKey(
         Review,
         verbose_name='Комментарий',
