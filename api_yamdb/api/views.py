@@ -145,6 +145,7 @@ class TitleViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
     filter_backend = (DjangoFilterBackend, )
     filterset_class = TitlesFilter
+    
     def get_serializer_class(self):
         if self.action in ('retrieve', 'list'):
             return ReadOnlyTitleSerializer
