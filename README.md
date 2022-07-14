@@ -34,6 +34,6 @@
 - python3 manage.py runserver
 
 # Команда разработки:
-- https://github.com/UnRainbow (Тимлид) - управление пользователями (Auth и Users): система регистрации и аутентификации, права доступа, работа с токеном, система подтв. через e-mail.
-- https://github.com/EgorGushin - категории (Categories), жанры (Genres) и произведения (Titles): модели, view и эндпойнты для них.
-- https://github.com/Sergey-Derevyanchenko - отзывы (Review) и комментарии (Comments): модели и view, эндпойнты, права доступа для запросов. Рейтинги произведений.
+- [Первухина Анна](https://github.com/UnRainbow) - управление пользователями (Auth и Users): система регистрации и аутентификации, права доступа, работа с токеном, система подтв. через e-mail.
+- [Гущин Егор](https://github.com/EgorGushin) - категории (Categories), жанры (Genres) и произведения (Titles): модели, view и эндпойнты для них.
+- [Деревянченко Сергей](https://github.com/Sergey-Derevyanchenko) - отзывы (Review) и комментарии (Comments): модели и view, эндпойнты, права доступа для запросов. Рейтинги произведений.
