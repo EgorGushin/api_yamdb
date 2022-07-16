@@ -130,7 +130,7 @@ class Title(models.Model):
         Genre,
         verbose_name='Жанр произведения',
         help_text='Укажите жанр произведения',
-        trough='GenreTitle'
+        through='GenreTitle'
     )
     category = models.ForeignKey(
         Category,
