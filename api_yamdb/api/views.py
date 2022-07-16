@@ -4,7 +4,6 @@ from django.core.mail import send_mail
 from django.db.models import Avg
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-
 from rest_framework import status, viewsets
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.filters import SearchFilter
@@ -14,10 +13,8 @@ from rest_framework.permissions import (AllowAny, IsAuthenticated,
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 
-from reviews.models import (Category, Comment,
-                            Genre, Review,
+from reviews.models import (Category, Genre, Review,
                             Title, User)
-
 from .filters import TitlesFilter
 from .mixins import ListCreateDestroyViewSet
 from .permissions import (IsAdmin, IsAdminOrReadOnly,
@@ -97,7 +94,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = (IsModerOrAdminOrAuthor, IsAuthenticatedOrReadOnly)
     pagination_class = PageNumberPagination
@@ -125,7 +121,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, title=title)
 
 
-class CategoryViewSet(ListCreateDestroyViewSet):
+class CategoryViewSet(ListCreateDestroyViewSet, viewsets.GenericViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -135,7 +131,7 @@ class CategoryViewSet(ListCreateDestroyViewSet):
     pagination_class = PageNumberPagination
 
 
-class GenreViewSet(ListCreateDestroyViewSet):
+class GenreViewSet(ListCreateDestroyViewSet, viewsets.GenericViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -148,7 +144,6 @@ class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all().annotate(
         Avg('reviews__score')
     ).order_by('name')
-    serializer_class = TitleSerializer
     permission_classes = (IsAdminOrReadOnly,)
     filter_backend = (DjangoFilterBackend,)
     filterset_class = TitlesFilter
