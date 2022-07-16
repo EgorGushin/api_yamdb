@@ -125,7 +125,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, title=title)
 
 
-class CategoryViewSet(ListCreateDestroyViewSet):
+class CategoryViewSet(ListCreateDestroyViewSet,
+                      viewsets.GenericViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -135,7 +136,8 @@ class CategoryViewSet(ListCreateDestroyViewSet):
     pagination_class = PageNumberPagination
 
 
-class GenreViewSet(ListCreateDestroyViewSet):
+class GenreViewSet(ListCreateDestroyViewSet,
+                   viewsets.GenericViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -148,7 +150,6 @@ class TitleViewSet(viewsets.ModelViewSet):
     queryset = Title.objects.all().annotate(
         Avg('reviews__score')
     ).order_by('name')
-    serializer_class = TitleSerializer
     permission_classes = (IsAdminOrReadOnly,)
     filter_backend = (DjangoFilterBackend,)
     filterset_class = TitlesFilter
