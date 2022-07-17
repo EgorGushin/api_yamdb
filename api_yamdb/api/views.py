@@ -18,7 +18,7 @@ from reviews.models import (Category, Genre, Review,
 from .filters import TitlesFilter
 from .mixins import ListCreateDestroyViewSet
 from .permissions import (IsAdmin, IsAdminOrReadOnly,
-                          IsModerOrAdminOrAuthor)
+                          IsAuthorOrReadOnly, IsModeratorOrReadOnly)
 from .serializers import (CategorySerializer, CommentSerializer,
                           GenreSerializer, GetConfirmationCodeSerializer,
                           GetTokenSerializer, ReadOnlyTitleSerializer,
@@ -31,16 +31,16 @@ def sign_up(request):
     serializer = GetConfirmationCodeSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
-    user = get_object_or_404(
-        User,
-        username=serializer.validated_data.get('username')
+    user, _ = User.objects.get_or_create(
+        username=serializer.validated_data.get('username'),
+        email=serializer.validated_data.get('email')
     )
     confirmation_code = default_token_generator.make_token(user)
     send_mail(
         subject='Регистрация на сервисе Yamdb',
         message=f'Ваш код подтверждения - {confirmation_code}',
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=(user.email, )
+        recipient_list=(user.email,)
     )
     return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -95,7 +95,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = (IsModerOrAdminOrAuthor, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsAuthenticatedOrReadOnly,
+                          IsModeratorOrReadOnly | IsAuthorOrReadOnly |
+                          IsAdminOrReadOnly)
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
@@ -109,7 +111,8 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
-    permission_classes = (IsModerOrAdminOrAuthor, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsAuthenticatedOrReadOnly, IsModeratorOrReadOnly |
+                          IsAuthorOrReadOnly | IsAdminOrReadOnly)
     pagination_class = PageNumberPagination
 
     def get_queryset(self):
