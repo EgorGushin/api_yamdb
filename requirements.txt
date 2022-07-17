@@ -29,3 +29,9 @@ typing==3.7.4.3
 typing_extensions==4.3.0
 urllib3==1.26.10
 zipp==3.8.0
+
+pip==22.1.2
+numpy==1.23.1
+six==1.16.0
+setuptools==49.2.1
+pandas==1.4.3
