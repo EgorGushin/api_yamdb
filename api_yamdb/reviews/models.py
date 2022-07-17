@@ -29,17 +29,20 @@ class User(AbstractUser):
         help_text='Укажите имя',
         max_length=150,
         blank=True,
+        null=True,
     )
     last_name = models.CharField(
         verbose_name='Фамилия',
         help_text='Укажите фамилию',
         max_length=150,
         blank=True,
+        null=True,
     )
     bio = models.TextField(
         verbose_name='Биография',
-        blank=True,
         help_text='Расскажите о себе',
+        blank=True,
+        null=True,
     )
     role = models.CharField(
         verbose_name='Тип пользователя',
