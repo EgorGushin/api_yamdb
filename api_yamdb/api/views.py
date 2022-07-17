@@ -35,10 +35,6 @@ def sign_up(request):
         username=serializer.validated_data.get('username'),
         email=serializer.validated_data.get('email')
     )
-    # user = get_object_or_404(
-    #     User,
-    #     username=serializer.validated_data.get('username')
-    # )
     confirmation_code = default_token_generator.make_token(user)
     send_mail(
         subject='Регистрация на сервисе Yamdb',
