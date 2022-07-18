@@ -58,7 +58,7 @@ def get_token(request):
         user, serializer.validated_data.get('confirmation_code')
     ):
         token = AccessToken.for_user(user)
-        return Response({"token": str(token)}, status=status.HTTP_200_OK)
+        return Response({'token': str(token)}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -147,9 +147,7 @@ class GenreViewSet(ListCreateDestroyViewSet, viewsets.GenericViewSet):
 
 
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all().annotate(
-        Avg('reviews__score')
-    ).order_by('name')
+    queryset = Title.objects.annotate(Avg('reviews__score')).order_by('name')
     permission_classes = (IsAdminOrReadOnly,)
     filter_backend = (DjangoFilterBackend,)
     filterset_class = TitlesFilter
