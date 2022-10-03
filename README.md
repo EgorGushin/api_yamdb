@@ -27,7 +27,7 @@
 - Python 3.7, Django 2.2, DRF, JWT
 
 <details>
-<summary> <h2> Как запустить проект: </h2> </summary>
+<summary><h2>Как запустить проект:</h2></summary>
 
 ### *Клонировать репозиторий:*
 ```
@@ -53,7 +53,9 @@ python3 manage.py migrate
 ```
 
 ### *Запустить проект:*
-```python3 manage.py runserver```
+```
+python3 manage.py runserver
+```
 
 ## База данных:
 
@@ -64,10 +66,14 @@ Users, Titles, Categories, Genres, Review и Comments.
 ### ***Для загрузки данных, получаемых вместе с проектом:***
 
 ### *Установите библиотеку pandas*
-```pip install pandas```
+```
+pip install pandas
+```
 
 ### *Запустите management-команду, добавляющую данные в БД через Django ORM*
-```python3 manage.py import_csv```
+```
+python3 manage.py import_csv
+```
 </details>
 
 ## Команда разработки:
